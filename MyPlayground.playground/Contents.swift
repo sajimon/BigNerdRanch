@@ -46,3 +46,47 @@ if let r1 = optionalFloat1,
 
 //Loops and String Interpolation
 
+var countingUp = ["one", "two"]
+countingUp.append("three")
+
+for var i = 0 ; i < countingUp.count ; i+=1
+{
+    let string = countingUp[i]
+}
+
+let range = 0..<countingUp.count
+for i in range{
+    let string = countingUp[i]
+}
+
+for string in countingUp{
+    string
+}
+
+for (i, string) in countingUp.enumerate() {
+    let napis = string
+    let index = i
+}
+
+
+//Enumerations and the Switch Statement
+enum PieType: Int {
+    case Apple = 0
+    case Cherry
+    case Pecan
+}
+
+let favPie = PieType.Apple
+
+let name: String
+switch favPie {
+case .Apple:
+    name = "Apple"
+    
+default:
+    name = "Apple"
+}
+
+
+
+
