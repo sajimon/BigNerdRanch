@@ -87,6 +87,8 @@ default:
     name = "Apple"
 }
 
+let nchs = NSCharacterSet.decimalDigitCharacterSet()
 
+let goodCharacter = nchs.characterIsMember("3".characterAtIndex(0))
 
 
