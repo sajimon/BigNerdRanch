@@ -43,6 +43,22 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
     }()
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print("Convert View loaded.")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        print("Convert View will appear...")
+        
+//        let bgColor = UIColor.init(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1)
+        
+//        view.backgroundColor = bgColor;
+        
+    }
+    
     @IBAction func fahrenheitFielsEditingChanged(textField: UITextField)
     {
         if let text = textField.text, value = Double(text)
