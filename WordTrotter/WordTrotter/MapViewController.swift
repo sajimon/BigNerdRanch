@@ -9,19 +9,35 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var mapView: MKMapView!
+//    let userLocButton: UIButton!
+    var locationManager: CLLocationManager!
+    
+    
     
     override func loadView(){
         mapView = MKMapView()
+        mapView.delegate = self
+        mapView.userTrackingMode = .Follow
         
         view = mapView
+
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+
+        
         
         let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
         segmentedControl.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(MapViewController.mapTypeChanged(_:)), forControlEvents: .ValueChanged)
+        
         
         
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +53,20 @@ class MapViewController: UIViewController {
         leadingConstraint.active = true
         trailingConstraint.active = true
         
+        
+        let userLocButton = UIButton(type: .System)
+        
+        userLocButton.setTitle("User", forState: .Normal)
+        userLocButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
+        userLocButton.addTarget(self, action: #selector(MapViewController.userLocation(_:)), forControlEvents: .TouchUpInside)
+        
+        userLocButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(userLocButton);
+        
+        userLocButton.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor, constant: -10).active = true
+        userLocButton.heightAnchor.constraintEqualToConstant(45).active = true
+        userLocButton.widthAnchor.constraintEqualToConstant(45).active = true
+        userLocButton.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor).active = true
     }
     
     override func viewDidLoad() {
@@ -45,6 +75,10 @@ class MapViewController: UIViewController {
         print("Map View loaded.")
     }
     
+    func userLocation(button: UIButton){
+        print("przycisk")
+        mapView.showsUserLocation = true
+    }
     
     func mapTypeChanged(segControl: UISegmentedControl){
         switch segControl.selectedSegmentIndex {

@@ -61,11 +61,9 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func fahrenheitFielsEditingChanged(textField: UITextField)
     {
-        if let text = textField.text, value = Double(text)
-        {
-            farValue = value
-        }else
-        {
+        if let text = textField.text, number = numFormatter.numberFromString(text){
+            farValue = number.doubleValue
+        }else{
             farValue = nil
         }
     }
@@ -94,8 +92,11 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         print("Current text: \(textField.text)")
         print("Replacement text: \(string)")
         
-        let existingTextHasDecimal = textField.text?.rangeOfString(".")
-        let replacementTextHasDecimal = string.rangeOfString(".")
+        let currentLocale = NSLocale.currentLocale()
+        let decimalSeparator = currentLocale.objectForKey(NSLocaleDecimalSeparator) as! String
+        
+        let existingTextHasDecimal = textField.text?.rangeOfString(decimalSeparator)
+        let replacementTextHasDecimal = string.rangeOfString(decimalSeparator)
         
         if existingTextHasDecimal != nil && replacementTextHasDecimal != nil {
             print("Blocked!");
