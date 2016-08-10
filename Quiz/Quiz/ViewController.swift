@@ -10,7 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet var questionLabel: UILabel!
+//    @IBOutlet var questionLabel: UILabel!
+    @IBOutlet var currentQuestionLabel: UILabel!
+    @IBOutlet var currentQuestionLabelCenterXConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var nextQuestionLabel: UILabel!
+    @IBOutlet var nextQuestionLabelCenterXConstraint: NSLayoutConstraint!
+    
     @IBOutlet var answerLabel: UILabel!
 
     let questions: [String] = ["Fromwhat is cognac mage?",
@@ -35,8 +41,10 @@ class ViewController: UIViewController {
         }
         
         let question: String = questions[currentQuestionIndex]
-        questionLabel.text = question
+        nextQuestionLabel.text = question
         answerLabel.text = "???";
+        
+        animateLabelTransitions()
         
     }
     
@@ -47,8 +55,52 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        questionLabel.text = questions[currentQuestionIndex]
+        currentQuestionLabel.text = questions[currentQuestionIndex]
+        
+        updateOffScreenLabel()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        nextQuestionLabel.alpha = 0
+        
+    }
+    
+    func updateOffScreenLabel(){
+        let scrWidth = view.frame.width
+        nextQuestionLabelCenterXConstraint.constant = -scrWidth
+    }
+    
+    
+    func animateLabelTransitions() {
+        
+        view.layoutIfNeeded()
+        
+        let scrWidth = view.frame.width
+        self.nextQuestionLabelCenterXConstraint.constant = 0
+        self.currentQuestionLabelCenterXConstraint.constant += scrWidth
+        
+        UIView.animateWithDuration(0.5,
+                                   delay: 0,
+                                   options: [ .CurveLinear ],
+                                   animations: {
+                                    self.currentQuestionLabel.alpha = 0
+                                    self.nextQuestionLabel.alpha = 1
+                                    
+                                    self.view.layoutIfNeeded()
+            
+            
+            },
+                                   completion: { _ in
+                                    swap(&self.currentQuestionLabel, &self.nextQuestionLabel)
+                                    swap(&self.currentQuestionLabelCenterXConstraint, &self.nextQuestionLabelCenterXConstraint)
+                                    
+                                    self.updateOffScreenLabel()
+        })
+    }
+    
+    
     
 }
 
