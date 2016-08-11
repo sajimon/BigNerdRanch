@@ -16,6 +16,7 @@
 		A0B14D021D5B476B007F2299 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B14D011D5B476B007F2299 /* ItemStore.swift */; };
 		A0B14D041D5C74A3007F2299 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B14D031D5C74A3007F2299 /* ItemCell.swift */; };
 		A0B14D061D5C9072007F2299 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B14D051D5C9072007F2299 /* DetailViewController.swift */; };
+		A0B14D081D5CB2FB007F2299 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B14D071D5CB2FB007F2299 /* ImageStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A0B14D011D5B476B007F2299 /* ItemStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		A0B14D031D5C74A3007F2299 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		A0B14D051D5C9072007F2299 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		A0B14D071D5CB2FB007F2299 /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				A0B14CFF1D5B3991007F2299 /* Item.swift */,
+				A0B14D071D5CB2FB007F2299 /* ImageStore.swift */,
 				A0B14CEB1D5B3660007F2299 /* AppDelegate.swift */,
 				A0B14CFD1D5B3765007F2299 /* ItemsViewController.swift */,
 				A0B14D031D5C74A3007F2299 /* ItemCell.swift */,
@@ -152,6 +155,7 @@
 				A0B14D021D5B476B007F2299 /* ItemStore.swift in Sources */,
 				A0B14D061D5C9072007F2299 /* DetailViewController.swift in Sources */,
 				A0B14CEC1D5B3660007F2299 /* AppDelegate.swift in Sources */,
+				A0B14D081D5CB2FB007F2299 /* ImageStore.swift in Sources */,
 				A0B14D041D5C74A3007F2299 /* ItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

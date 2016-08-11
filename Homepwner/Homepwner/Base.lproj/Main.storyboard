@@ -88,8 +88,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wj-Yw-1Nv">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="H8S-df-t8f"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="camera" id="h2A-Z8-dcm">
+                                        <connections>
+                                            <action selector="takePicture:" destination="dcS-o2-J6u" id="ZQD-1Y-e3t"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="trash" id="SBz-J1-ay7">
+                                        <color key="tintColor" red="0.88235294119999996" green="0.34509803919999998" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="trashPicture:" destination="dcS-o2-J6u" id="DkA-X0-0H7"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tEk-hy-avb">
-                                <rect key="frame" x="20" y="72" width="560" height="520"/>
+                                <rect key="frame" x="20" y="72" width="560" height="476"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="o1D-nt-FW4">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="30"/>
@@ -149,11 +168,14 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgu-FH-D4j">
-                                        <rect key="frame" x="0.0" y="114" width="560" height="406"/>
+                                        <rect key="frame" x="0.0" y="114" width="560" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="vQW-kq-juK">
+                                        <rect key="frame" x="0.0" y="143" width="560" height="333"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Ddr-kf-H1q" firstAttribute="leading" secondItem="z9x-Qe-Omn" secondAttribute="leading" id="465-55-GPV"/>
@@ -164,9 +186,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="1HO-HB-JFO" firstAttribute="top" secondItem="tEk-hy-avb" secondAttribute="bottom" constant="8" id="9ab-g7-YDf"/>
+                            <constraint firstItem="1HO-HB-JFO" firstAttribute="top" secondItem="3wj-Yw-1Nv" secondAttribute="bottom" id="CDy-Y2-BaF"/>
+                            <constraint firstItem="3wj-Yw-1Nv" firstAttribute="top" secondItem="tEk-hy-avb" secondAttribute="bottom" constant="8" id="Hhp-XM-p4b"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tEk-hy-avb" secondAttribute="trailing" id="Kaa-Ox-vsQ"/>
                             <constraint firstItem="tEk-hy-avb" firstAttribute="leading" secondItem="Lks-XP-sNB" secondAttribute="leadingMargin" id="W3v-9L-jzn"/>
+                            <constraint firstAttribute="trailing" secondItem="3wj-Yw-1Nv" secondAttribute="trailing" id="dey-5V-tBD"/>
+                            <constraint firstItem="3wj-Yw-1Nv" firstAttribute="leading" secondItem="Lks-XP-sNB" secondAttribute="leading" id="mUf-Xc-NMv"/>
+                            <constraint firstItem="1HO-HB-JFO" firstAttribute="top" secondItem="3wj-Yw-1Nv" secondAttribute="bottom" id="rbH-hW-3mU"/>
                             <constraint firstItem="tEk-hy-avb" firstAttribute="top" secondItem="SHo-Rp-dry" secondAttribute="bottom" constant="8" id="zRY-gH-RaX"/>
                         </constraints>
                         <connections>
@@ -175,6 +201,7 @@
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="Dgu-FH-D4j" id="hm8-ZZ-sdw"/>
+                        <outlet property="imageView" destination="vQW-kq-juK" id="OBy-v0-GN6"/>
                         <outlet property="nameField" destination="Ims-Lt-WbD" id="nbf-MO-egS"/>
                         <outlet property="serialField" destination="Ddr-kf-H1q" id="Zue-Yy-xbH"/>
                         <outlet property="valueField" destination="z9x-Qe-Omn" id="pwz-4x-GlN"/>
