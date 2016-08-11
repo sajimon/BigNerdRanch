@@ -90,5 +90,14 @@ class ItemsViewController: UITableViewController {
         itemStore.moveItemAtIndex(sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowItem" {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                let item = itemStore.allItems[row]
+                let detailedViewController = segue.destinationViewController as! DetailViewController
+                detailedViewController.item = item
+            }
+        }
+    }
     
 }
