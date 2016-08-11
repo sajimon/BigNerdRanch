@@ -8,15 +8,24 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet var nameField: UITextField!
     @IBOutlet var serialField: UITextField!
     @IBOutlet var valueField: UITextField!
     @IBOutlet var dateLabel: UILabel!
+
     
-    var item: Item!
+    var item: Item! {
+        didSet {
+            navigationItem.title = item.name
+        }
+    }
+    
+    @IBAction func backgroudTapped(sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
     
     let numberFormatter: NSNumberFormatter = {
         let f = NSNumberFormatter()
@@ -40,5 +49,29 @@ class DetailViewController: UIViewController {
         serialField.text = item.serialNumber
         valueField.text = numberFormatter.stringFromNumber(item.valueInDollars)
         dateLabel.text = dateFormatter.stringFromDate(item.dateCreated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.endEditing(true)
+        
+        item.name = nameField.text ?? ""
+        item.serialNumber = serialField.text
+        
+        if let valText = valueField.text , value = numberFormatter.numberFromString(valText) {
+            item.valueInDollars = value.integerValue
+        }else {
+            item.valueInDollars = 0
+        }
+        
+        print("Updating item")
+        item.printToConsole()
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
