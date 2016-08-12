@@ -12,17 +12,19 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let itemStore = ItemStore()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        let itemStore = ItemStore()
         let imageStore = ImageStore()
         
         let navController = window!.rootViewController as! UINavigationController
         let itemsController = navController.topViewController as! ItemsViewController
         itemsController.itemStore = itemStore
         itemsController.imageStore = imageStore
+        
+        print("App bundle path: \(NSBundle.mainBundle().bundlePath)")
         
         return true
     }
@@ -35,6 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        if itemStore.saveChanges() {
+            print("Saved all of the items")
+        }else {
+            print("Could not save any of the items")
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
