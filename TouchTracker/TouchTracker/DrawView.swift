@@ -12,6 +12,7 @@ class DrawView: UIView {
     
     var currentLines = [NSValue:Line]()
     var finishedLines = [Line]()
+    var selectedLineIndex: Int?
     
     
     @IBInspectable var finishedLineColor: UIColor = UIColor.blackColor() {
@@ -32,6 +33,20 @@ class DrawView: UIView {
         }
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        let doubleTapRec = UITapGestureRecognizer(target: self, action: #selector(DrawView.doubleTap))
+        doubleTapRec.numberOfTapsRequired = 2
+        doubleTapRec.delaysTouchesBegan = true
+        addGestureRecognizer(doubleTapRec)
+        
+        let tapRec = UITapGestureRecognizer(target: self, action: #selector(DrawView.tap))
+        tapRec.delaysTouchesBegan = true
+        tapRec.requireGestureRecognizerToFail(doubleTapRec)
+        addGestureRecognizer(tapRec)
+        
+    }
     
     //MARK: - Drawing methods
     func strokeLine(line: Line) {
@@ -56,6 +71,12 @@ class DrawView: UIView {
         currentLineColor.setStroke()
         for (_,line) in currentLines {
             strokeLine(line)
+        }
+        
+        if let index = selectedLineIndex {
+            UIColor.greenColor().setStroke()
+            let selectedLine = finishedLines[index]
+            strokeLine(selectedLine)
         }
     }
     
@@ -109,6 +130,45 @@ class DrawView: UIView {
         currentLines.removeAll()
         
         setNeedsDisplay()
+    }
+    
+    //MARK: - Gesture recognizer methods
+    func doubleTap(gr: UIGestureRecognizer) {
+        print("Recognized double tap...")
+        
+        selectedLineIndex = nil
+        
+        currentLines.removeAll(keepCapacity: false)
+        finishedLines.removeAll(keepCapacity: false)
+        setNeedsDisplay()
+    }
+    
+    func tap(gr: UIGestureRecognizer) {
+        print("Recognized single tap...")
+        
+        let point = gr.locationInView(self)
+        selectedLineIndex = indexOfLineAtPoint(point)
+        
+        setNeedsDisplay()
+    }
+    
+    //MARK: - Other
+    func indexOfLineAtPoint(point: CGPoint) -> Int? {
+        for (index, line) in finishedLines.enumerate() {
+            let begin = line.begin
+            let end = line.end
+            
+            for t in CGFloat(0).stride(to: 1.0, by: 0.05) {
+                let x = begin.x + ((end.x - begin.x) * t)
+                let y = begin.y + ((end.y - begin.y) * t)
+                
+                if hypot(x - point.x, y - point.y) < 20.0 {
+                    return index
+                }
+            }
+        }
+        
+        return nil
     }
     
 }
