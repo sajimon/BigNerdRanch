@@ -8,11 +8,19 @@
 
 import UIKit
 
-class DrawView: UIView {
+class DrawView: UIView, UIGestureRecognizerDelegate {
     
     var currentLines = [NSValue:Line]()
     var finishedLines = [Line]()
-    var selectedLineIndex: Int?
+    var selectedLineIndex: Int? {
+        didSet {
+            if selectedLineIndex == nil {
+                let menu = UIMenuController.sharedMenuController()
+                menu.setMenuVisible(false, animated: true)
+            }
+        }
+    }
+    var moveRecognizer: UIPanGestureRecognizer!
     
     
     @IBInspectable var finishedLineColor: UIColor = UIColor.blackColor() {
@@ -45,6 +53,15 @@ class DrawView: UIView {
         tapRec.delaysTouchesBegan = true
         tapRec.requireGestureRecognizerToFail(doubleTapRec)
         addGestureRecognizer(tapRec)
+        
+        let longPressRec = UILongPressGestureRecognizer(target: self, action: #selector(DrawView.longPress))
+        addGestureRecognizer(longPressRec)
+        
+        moveRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveLine))
+        moveRecognizer.cancelsTouchesInView = false
+        moveRecognizer.delegate = self
+        addGestureRecognizer(moveRecognizer)
+        
         
     }
     
@@ -132,6 +149,11 @@ class DrawView: UIView {
         setNeedsDisplay()
     }
     
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        //Brak złożonej impl. bo tylko moveRecognizer ma ustawioną delegacje.
+        return true
+    }
+    
     //MARK: - Gesture recognizer methods
     func doubleTap(gr: UIGestureRecognizer) {
         print("Recognized double tap...")
@@ -148,6 +170,48 @@ class DrawView: UIView {
         
         let point = gr.locationInView(self)
         selectedLineIndex = indexOfLineAtPoint(point)
+        
+        let menu = UIMenuController.sharedMenuController()
+        
+        if selectedLineIndex != nil {
+            becomeFirstResponder()
+            
+            let deleteItem = UIMenuItem(title: "Delete", action: #selector(DrawView.deleteLine))
+            menu.menuItems = [deleteItem]
+            
+            menu.setTargetRect(CGRect(x: point.x, y: point.y, width: 2, height: 2), inView: self)
+            menu.setMenuVisible(true, animated: true)
+            
+        }else {
+            menu.setMenuVisible(false, animated: true)
+        }
+        
+        setNeedsDisplay()
+    }
+    
+    func longPress(gr: UIGestureRecognizer) {
+        print("Recognized a long press")
+        
+        switch gr.state {
+        case .Possible:
+            print("Possible")
+        case .Began:
+            print("Began")
+            let point = gr.locationInView(self)
+            selectedLineIndex = indexOfLineAtPoint(point)
+            
+            if selectedLineIndex != nil {
+                currentLines.removeAll(keepCapacity: false)
+            }
+            
+
+        case .Ended:
+            print("Ended")
+            selectedLineIndex = nil
+        default:
+            break
+            
+        }
         
         setNeedsDisplay()
     }
@@ -169,6 +233,40 @@ class DrawView: UIView {
         }
         
         return nil
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    func deleteLine() {
+        if let index = selectedLineIndex {
+            finishedLines.removeAtIndex(index)
+            selectedLineIndex = nil
+            
+            setNeedsDisplay()
+        }
+    }
+    
+    func moveLine(gr: UIPanGestureRecognizer) {
+        print("Recognized a pan...")
+        
+        if let index = selectedLineIndex {
+            if gr.state == .Changed {
+                let translation = gr.translationInView(self)
+                finishedLines[index].begin.x += translation.x
+                finishedLines[index].begin.y += translation.y
+                finishedLines[index].end.x += translation.x
+                finishedLines[index].end.y += translation.y
+                
+                gr.setTranslation(CGPoint.zero, inView: self)
+                
+                setNeedsDisplay()
+            }
+        } else {
+            return
+        }
+        
     }
     
 }
