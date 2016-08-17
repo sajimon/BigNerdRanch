@@ -15,6 +15,7 @@
 		A083622A1D63324D0016A87D /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08362291D63324D0016A87D /* FlickrAPI.swift */; };
 		A083622C1D633AFC0016A87D /* PhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A083622B1D633AFC0016A87D /* PhotoStore.swift */; };
 		A083622E1D634A120016A87D /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A083622D1D634A120016A87D /* Photo.swift */; };
+		A08362301D649EA50016A87D /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A083622F1D649EA50016A87D /* PhotoDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		A08362291D63324D0016A87D /* FlickrAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
 		A083622B1D633AFC0016A87D /* PhotoStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoStore.swift; sourceTree = "<group>"; };
 		A083622D1D634A120016A87D /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		A083622F1D649EA50016A87D /* PhotoDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				A08362151D632F2D0016A87D /* AppDelegate.swift */,
 				A08362271D632F5D0016A87D /* PhotosViewController.swift */,
+				A083622F1D649EA50016A87D /* PhotoDataSource.swift */,
 				A083622B1D633AFC0016A87D /* PhotoStore.swift */,
 				A08362291D63324D0016A87D /* FlickrAPI.swift */,
 				A083622D1D634A120016A87D /* Photo.swift */,
@@ -147,6 +150,7 @@
 				A083622A1D63324D0016A87D /* FlickrAPI.swift in Sources */,
 				A08362281D632F5D0016A87D /* PhotosViewController.swift in Sources */,
 				A083622C1D633AFC0016A87D /* PhotoStore.swift in Sources */,
+				A08362301D649EA50016A87D /* PhotoDataSource.swift in Sources */,
 				A08362161D632F2D0016A87D /* AppDelegate.swift in Sources */,
 				A083622E1D634A120016A87D /* Photo.swift in Sources */,
 			);
@@ -300,6 +304,7 @@
 				A08362261D632F2D0016A87D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
