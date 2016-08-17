@@ -6,7 +6,16 @@
 //  Copyright © 2016 Marcin Sporysz. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+enum ImageResult {
+    case Success(UIImage)
+    case Failure(ErrorType)
+}
+
+enum PhotoError: ErrorType {
+    case ImageCreationError
+}
 
 class PhotoStore {
     let session: NSURLSession = {
@@ -22,6 +31,15 @@ class PhotoStore {
             (data, response, error) -> Void in
             let result = self.processRecentPhotosRequest(data: data, error: error)
             completion(result)
+            
+            if let httpResponse = response as? NSHTTPURLResponse {
+                print("HTTP Response: \(httpResponse.statusCode)")
+                
+                for (header, value) in httpResponse.allHeaderFields {
+                    print("\(header as! String): \(value) " )
+                }
+            }
+            
         }
         task.resume()
     }
@@ -32,5 +50,36 @@ class PhotoStore {
         }
         
         return FlickrAPI.photosFromJSONData(jsonData)
+    }
+    
+    func fetchImageForPhoto(photo: Photo, completion: (ImageResult) -> Void) {
+        let photoURL = photo.remoteURL
+        let request = NSURLRequest(URL: photoURL)
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            
+            let result = self.processImageRequest(data: data, error: error)
+            
+            if case let .Success(image) = result {
+                photo.image = image
+            }
+            
+            completion(result)
+        }
+        task.resume()
+    }
+    
+    func processImageRequest(data data: NSData?, error: NSError?) -> ImageResult {
+        guard let
+            imageData = data,
+            image = UIImage(data: imageData) else {
+                if data == nil {
+                    return .Failure(error!)
+                } else {
+                    return .Failure(PhotoError.ImageCreationError)
+                }
+        }
+        
+        return .Success(image)
     }
 }
