@@ -26,6 +26,11 @@ struct FlickrAPI {
     
     private static let baseURLString = "https://api.flickr.com/services/rest"
     private static let APIKey = "917b2b70ee4331c799e9b67c78a4b45d"
+    private static let dateFormatter : NSDateFormatter = {
+        let f = NSDateFormatter()
+        f.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return f
+    }()
     
     
     private static func flickrURL(method method: Method, parameters: [String:String]?) -> NSURL {
@@ -57,17 +62,56 @@ struct FlickrAPI {
         return components.URL!
     }
     
+    private static func photoFromJSONObject(json: [String : AnyObject]) -> Photo? {
+        guard let
+            photoID = json["id"] as? String,
+            title = json["title"] as? String,
+            dateString = json["datetaken"] as? String,
+            photoURLString = json["url_h"] as? String,
+            url = NSURL(string: photoURLString),
+            dateTaken = dateFormatter.dateFromString(dateString) else {
+                return nil
+        }
+        
+        return Photo(title: title, remoteURL: url, photoID: photoID, dateTaken: dateTaken)
+    }
+    
+ 
     static func photosFromJSONData(data: NSData) -> PhotosResult {
         do {
             let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: [])
             
+            
+            guard let
+            jsonDictionary = jsonObject as? [NSObject:AnyObject],
+            photos = jsonDictionary["photos"] as? [String:AnyObject],
+            photosArray = photos["photo"] as? [[String:AnyObject]]
+            else {
+                return .Failure(FlickrError.InvalidJSONData)
+            }
+            
             var finalPhotos = [Photo]()
+            
+            for photoJSON in photosArray {
+                if let photo = photoFromJSONObject(photoJSON) {
+                    finalPhotos.append(photo)
+                }
+                
+            }
+            
+            
+            if finalPhotos.count == 0 && photosArray.count > 0 {
+                return .Failure(FlickrError.InvalidJSONData)
+            }
+            
             return .Success(finalPhotos)
         } catch let error {
             return .Failure(error)
         }
         
     }
+    
+    
     
     //MARK - URL Getters
     static func recentPhotosURL() -> NSURL {
