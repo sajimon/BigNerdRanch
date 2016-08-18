@@ -20,22 +20,42 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NgE-ZU-Zfm">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3ZF-I4-hBG">
-                                    <size key="itemSize" width="50" height="50"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="3ZF-I4-hBG">
+                                    <size key="itemSize" width="90" height="90"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UICollectionViewCell" id="Ocf-Bz-4IZ">
-                                        <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UICollectionViewCell" id="Ocf-Bz-4IZ" customClass="PhotoCollectionViewCell" customModule="Photorama" customModuleProvider="target">
+                                        <rect key="frame" x="2" y="66" width="90" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ldA-It-DcS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                                </imageView>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Pgl-pW-lzI">
+                                                    <rect key="frame" x="35" y="35" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Pgl-pW-lzI" firstAttribute="centerX" secondItem="Ocf-Bz-4IZ" secondAttribute="centerX" id="0Fg-4I-anP"/>
+                                            <constraint firstAttribute="trailing" secondItem="ldA-It-DcS" secondAttribute="trailing" id="9Eu-bc-bSP"/>
+                                            <constraint firstItem="Pgl-pW-lzI" firstAttribute="centerY" secondItem="Ocf-Bz-4IZ" secondAttribute="centerY" id="CDx-tF-Ba7"/>
+                                            <constraint firstItem="ldA-It-DcS" firstAttribute="top" secondItem="Ocf-Bz-4IZ" secondAttribute="top" id="df5-DF-A0K"/>
+                                            <constraint firstAttribute="bottom" secondItem="ldA-It-DcS" secondAttribute="bottom" id="fI8-uZ-1sX"/>
+                                            <constraint firstItem="ldA-It-DcS" firstAttribute="leading" secondItem="Ocf-Bz-4IZ" secondAttribute="leading" id="x1Q-1P-gxM"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="ldA-It-DcS" id="Gru-iR-H8B"/>
+                                            <outlet property="spinner" destination="Pgl-pW-lzI" id="hug-AO-CNA"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
