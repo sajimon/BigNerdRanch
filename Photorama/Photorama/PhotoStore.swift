@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum ImageResult {
     case Success(UIImage)
@@ -18,6 +19,10 @@ enum PhotoError: ErrorType {
 }
 
 class PhotoStore {
+    
+    let coreDataStack = CoreDataStack(modelName: "Photorama")
+    let imageStore = ImageStore()
+    
     let session: NSURLSession = {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         return NSURLSession(configuration: config)
@@ -25,21 +30,36 @@ class PhotoStore {
     
     
     func fetchRecentPhotos(completion completion: (PhotosResult) -> Void) {
+        
         let url = FlickrAPI.recentPhotosURL()
         let request = NSURLRequest(URL: url)
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
-            let result = self.processRecentPhotosRequest(data: data, error: error)
-            completion(result)
             
-            if let httpResponse = response as? NSHTTPURLResponse {
-                print("HTTP Response: \(httpResponse.statusCode)")
+            var result = self.processRecentPhotosRequest(data: data, error: error)
+            
+            if case let .Success(photos) = result {
+                let mainQueueContext = self.coreDataStack.mainQueueContext
+                mainQueueContext.performBlockAndWait() {
+                    try! mainQueueContext.obtainPermanentIDsForObjects(photos)
+                }
+                let objectIDs = photos.map{ $0.objectID }
+                let predicate = NSPredicate(format: "self IN %@", objectIDs)
+                let sortByDateTaken = NSSortDescriptor(key: "dateTaken", ascending: true)
                 
-                for (header, value) in httpResponse.allHeaderFields {
-                    print("\(header as! String): \(value) " )
+                do {
+                    try self.coreDataStack.saveChanges()
+                    
+                    let mainQueuePhotos = try self.fetchMainQueuePhotos(predicate: predicate,
+                                                                        sortDescriptors: [sortByDateTaken])
+                    result = .Success(mainQueuePhotos)
+                }
+                catch let error {
+                    result = .Failure(error)
                 }
             }
             
+            completion(result)
         }
         task.resume()
     }
@@ -49,12 +69,14 @@ class PhotoStore {
             return .Failure(error!)
         }
         
-        return FlickrAPI.photosFromJSONData(jsonData)
+        return FlickrAPI.photosFromJSONData(jsonData, inContext: self.coreDataStack.mainQueueContext)
     }
     
     func fetchImageForPhoto(photo: Photo, completion: (ImageResult) -> Void) {
         
-        if let image = photo.image {
+        let photoKey = photo.photoKey
+        
+        if let image = imageStore.imageForKey(photoKey) {
             completion(.Success(image))
             return
         }
@@ -68,6 +90,7 @@ class PhotoStore {
             
             if case let .Success(image) = result {
                 photo.image = image
+                self.imageStore.setImage(image, forKey: photoKey)
             }
             
             completion(result)
@@ -87,5 +110,30 @@ class PhotoStore {
         }
         
         return .Success(image)
+    }
+    
+    func fetchMainQueuePhotos(predicate predicate: NSPredicate? = nil,
+                                        sortDescriptors: [NSSortDescriptor]? = nil) throws -> [Photo] {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Photo")
+        fetchRequest.sortDescriptors = sortDescriptors
+        
+        let mainQueueContext = self.coreDataStack.mainQueueContext
+        var mainQueuePhotos: [Photo]?
+        var fetchRequestError: ErrorType?
+        mainQueueContext.performBlockAndWait() {
+            do {
+                mainQueuePhotos = try mainQueueContext.executeFetchRequest(fetchRequest) as? [Photo]
+            }
+            catch let error {
+                fetchRequestError = error
+            }
+        }
+        
+        guard let photos = mainQueuePhotos else {
+            throw fetchRequestError!
+        }
+        
+        return photos
     }
 }
