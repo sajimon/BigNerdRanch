@@ -17,18 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="vxw-Y2-bnO">
-                                <rect key="frame" x="236" y="236" width="128" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="QP5-lO-7R3"/>
-                                    <constraint firstAttribute="width" constant="128" id="a9C-Dy-obN"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_tech_dark" translatesAutoresizingMaskIntoConstraints="NO" id="LLe-b8-jo5">
+                                <rect key="frame" x="174" y="265" width="253" height="70"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vxw-Y2-bnO" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="EdF-Cd-Vez"/>
-                            <constraint firstItem="vxw-Y2-bnO" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qus-Ug-paG"/>
+                            <constraint firstItem="LLe-b8-jo5" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="C4I-Kw-doZ"/>
+                            <constraint firstItem="LLe-b8-jo5" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="GXk-nS-eJS"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,6 +34,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="iTunesArtwork" width="512" height="512"/>
+        <image name="logo_tech_dark" width="253" height="70"/>
     </resources>
 </document>
