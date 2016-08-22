@@ -10,10 +10,27 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    
+    var olvDataSource = PeripherialOutlineViewDataSource()
+    
+    @IBOutlet var outlineView: NSOutlineView!
+    
+    
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        olvDataSource.generateExampleData()
+        
+        outlineView.setDataSource(olvDataSource)
+        outlineView.setDelegate(self)
+        
     }
 
     override var representedObject: AnyObject? {
@@ -25,3 +42,7 @@ class ViewController: NSViewController {
 
 }
 
+
+extension ViewController: NSOutlineViewDelegate {
+    
+}

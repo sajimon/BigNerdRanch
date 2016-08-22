@@ -11,6 +11,8 @@
 		A08A11441D6B22BA00E30AD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08A11431D6B22BA00E30AD5 /* ViewController.swift */; };
 		A08A11461D6B22BA00E30AD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A08A11451D6B22BA00E30AD5 /* Assets.xcassets */; };
 		A08A11491D6B22BA00E30AD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A08A11471D6B22BA00E30AD5 /* Main.storyboard */; };
+		A08A11511D6B286600E30AD5 /* PeripherialOutlineViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08A11501D6B286600E30AD5 /* PeripherialOutlineViewDataSource.swift */; };
+		A08A11591D6B2D4600E30AD5 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08A11581D6B2D4600E30AD5 /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		A08A11451D6B22BA00E30AD5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A08A11481D6B22BA00E30AD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A08A114A1D6B22BA00E30AD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A08A11501D6B286600E30AD5 /* PeripherialOutlineViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripherialOutlineViewDataSource.swift; sourceTree = "<group>"; };
+		A08A11581D6B2D4600E30AD5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A08A11591D6B2D4600E30AD5 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,6 +41,7 @@
 		A08A11351D6B22BA00E30AD5 = {
 			isa = PBXGroup;
 			children = (
+				A08A11581D6B2D4600E30AD5 /* CoreBluetooth.framework */,
 				A08A11401D6B22BA00E30AD5 /* OutlineViewTests */,
 				A08A113F1D6B22BA00E30AD5 /* Products */,
 			);
@@ -55,6 +61,7 @@
 				A08A11411D6B22BA00E30AD5 /* AppDelegate.swift */,
 				A08A11431D6B22BA00E30AD5 /* ViewController.swift */,
 				A08A11451D6B22BA00E30AD5 /* Assets.xcassets */,
+				A08A11501D6B286600E30AD5 /* PeripherialOutlineViewDataSource.swift */,
 				A08A11471D6B22BA00E30AD5 /* Main.storyboard */,
 				A08A114A1D6B22BA00E30AD5 /* Info.plist */,
 			);
@@ -132,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A08A11441D6B22BA00E30AD5 /* ViewController.swift in Sources */,
+				A08A11511D6B286600E30AD5 /* PeripherialOutlineViewDataSource.swift in Sources */,
 				A08A11421D6B22BA00E30AD5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
