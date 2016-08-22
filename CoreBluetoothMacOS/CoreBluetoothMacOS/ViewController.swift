@@ -9,18 +9,33 @@
 import Cocoa
 import CoreBluetooth
 
-class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
+class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDelegate, NSTableViewDelegate {
     
     
     var manager: CBCentralManager!
+    var peripherialsDataSource: PeripherialsTableDataSource!
+    var selectedPeripherial: CBPeripheral? {
+        didSet {
+            if selectedPeripherial == nil {
+                connectButton.enabled = false
+            }else {
+                connectButton.enabled = true
+            }
+        }
+    }
     
-    var periphs: [CBPeripheral] = []
+    
+    @IBOutlet var table: NSTableView!
+    @IBOutlet var connectButton: NSButton!
  
     override func viewDidLoad() {
         super.viewDidLoad()
         
         manager = CBCentralManager(delegate: self, queue: nil)
+        peripherialsDataSource = PeripherialsTableDataSource()
         
+        table.setDataSource(peripherialsDataSource)
+        table.setDelegate(self)
         
         // Do any additional setup after loading the view.
     }
@@ -37,11 +52,10 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
     
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        print("Discovered periherial: \(peripheral.name) Services count: \(peripheral.services?.count)")
-        
-        if periphs.indexOf(peripheral) == nil {
-            periphs.append(peripheral)
-            print("Added peripherial \(peripheral)")
+        if peripherialsDataSource.indexOfPeripherial(peripheral) == nil {
+            peripherialsDataSource.addPeripherial(peripheral)
+            table.reloadData()
+            print("Discovered periherial: \(peripheral.name)")
         }
     }
     
@@ -57,8 +71,16 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         print("Available services:")
         
         for service in peripheral.services! {
-            print("UUID: \(service.UUID.UUIDString)")
-            //todo
+            print("Service UUID: \(service.UUID.UUIDString)")
+            
+            if let characteristics = service.characteristics {
+                for ch in characteristics {
+                    print("\t \(ch.UUID)")
+                }
+            }else {
+                print("\t No characteristics detected.")
+            }
+            
         }
     }
     
@@ -74,11 +96,43 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
   
     @IBAction func connectClicked(sender: AnyObject) {
-        if periphs.count > 0 {
-            let p = periphs.first!
+        
+        if let p = selectedPeripherial {
+            print("Connecting to: \(p.name)")
             
             manager.connectPeripheral(p, options: nil)
         }
     }
+    
+    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        
+        let p = peripherialsDataSource.periphs[row]
+        
+        var pn: String
+        
+        if let name = p.name {
+            pn = name
+        } else {
+            pn = "NN"
+        }
+
+        if let c = tableView.makeViewWithIdentifier("PeriphCellID", owner: nil) as? NSTableCellView {
+            c.textField?.stringValue = pn
+            return c
+        }
+
+        return nil
+    }
+    
+    func tableViewSelectionDidChange(notification: NSNotification) {
+        if table.numberOfSelectedRows > 0 {
+            selectedPeripherial = peripherialsDataSource.periphs[table.selectedRow]
+        } else {
+            selectedPeripherial = nil
+        }
+    }
+
+    
+
 }
 

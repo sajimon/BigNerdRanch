@@ -15,6 +15,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
+//        let vc = NSApplication.sharedApplication().mainWindow?.windowController?.contentViewController as! ViewController
+//        vc.peripherialsDataSource = PeripherialsTableDataSource()
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

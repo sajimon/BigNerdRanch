@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A08A11341D6AEE9D00E30AD5 /* PeripherialsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08A11331D6AEE9D00E30AD5 /* PeripherialsTableDataSource.swift */; };
 		A0E066F71D69E89A00AFF38B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E066F61D69E89A00AFF38B /* AppDelegate.swift */; };
 		A0E066F91D69E89A00AFF38B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E066F81D69E89A00AFF38B /* ViewController.swift */; };
 		A0E066FB1D69E89A00AFF38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0E066FA1D69E89A00AFF38B /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A08A11331D6AEE9D00E30AD5 /* PeripherialsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripherialsTableDataSource.swift; sourceTree = "<group>"; };
 		A0E066F31D69E89A00AFF38B /* CoreBluetoothMacOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreBluetoothMacOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E066F61D69E89A00AFF38B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0E066F81D69E89A00AFF38B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			children = (
 				A0E066F61D69E89A00AFF38B /* AppDelegate.swift */,
 				A0E066F81D69E89A00AFF38B /* ViewController.swift */,
+				A08A11331D6AEE9D00E30AD5 /* PeripherialsTableDataSource.swift */,
 				A0E066FA1D69E89A00AFF38B /* Assets.xcassets */,
 				A0E066FC1D69E89A00AFF38B /* Main.storyboard */,
 				A0E066FF1D69E89A00AFF38B /* Info.plist */,
@@ -132,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0E066F91D69E89A00AFF38B /* ViewController.swift in Sources */,
+				A08A11341D6AEE9D00E30AD5 /* PeripherialsTableDataSource.swift in Sources */,
 				A0E066F71D69E89A00AFF38B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +279,7 @@
 				A0E067041D69E89A00AFF38B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
