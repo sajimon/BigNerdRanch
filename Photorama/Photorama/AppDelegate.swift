@@ -5,6 +5,7 @@
 //  Created by Marcin Sporysz on 16/08/16.
 //  Copyright © 2016 Marcin Sporysz. All rights reserved.
 //
+//test
 
 import UIKit
 
@@ -16,9 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         ((window!.rootViewController as! UINavigationController).topViewController as! PhotosViewController).store = PhotoStore()
-        
+
         return true
     }
 
@@ -46,4 +47,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
