@@ -5,7 +5,7 @@
 //  Created by Marcin Sporysz on 16/08/16.
 //  Copyright © 2016 Marcin Sporysz. All rights reserved.
 //
-//test
+//
 
 import UIKit
 
